@@ -1,0 +1,19 @@
+star went to restaurent
+
+food -> data
+waiter -> API
+order -> API request sent to the server
+send to kitchen -> API is sent to the server
+food storage kitchen -> data base
+kitchen -> server
+food processens -> data processing happens
+star -> browser
+tabel -> browser
+waiter would be having differnt quisine order -> API would be having different kinds of request(GET, POST, DELETE, UPDATE, UPSERT, etc)
+chicken kabab, beef kabab -> getProduct, getAllProduct, getProductById 
+waiter's note -> request object
+waiter puts the note before chef, chef process the order -> request object goes to the server and handler function process the request
+chef -> handler function
+prepared hot food -> response object sent by the server
+food in a bowl, or plate, or a tray -> response in a json format, in a text format
+order written in notes -> API endpoint acociated with the request.

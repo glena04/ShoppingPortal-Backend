@@ -1,0 +1,23 @@
+{
+  "name": "shoppingportal-backend",
+  "version": "1.0.0",
+  "description": "This would be the backend server for the shopping portal",
+  "homepage": "https://github.com/glena04/ShoppingPortal-Backend#readme",
+  "bugs": {
+    "url": "https://github.com/glena04/ShoppingPortal-Backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glena04/ShoppingPortal-Backend.git"
+  },
+  "license": "ISC",
+  "author": "Star",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
