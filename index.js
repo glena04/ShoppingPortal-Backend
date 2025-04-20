@@ -51,3 +51,11 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+
+// Make the database available to routers
+app.locals.db = db;
+
+// Import routes
+const routes = require('./router/index');
+app.use('/', routes);

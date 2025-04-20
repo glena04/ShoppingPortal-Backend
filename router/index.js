@@ -1,19 +1,15 @@
+// router/index.js
 const express = require('express');
+const router = express.Router();
 
-const router = express.Router()
-
-
-// Routes
-router.get('/', testRoute);   //test Route
-router.get('/api/products', getALLProduct);   // Get all products
-router.get('/api/products/:id', getSingleProductById);   // Get single product by ID
-router.post('/api/products', addProduct);  // Add product
-
+// Function definitions
 const testRoute = (req, res) => {
     res.send('Server is running! 🚀');
 }
 
 const getALLProduct = (req, res) => {
+    const db = req.app.locals.db;       // was missing in the original code
+    // Access db from app.locals
     db.all("SELECT id, name, price, quantity FROM products", [], (err, rows) => {
         if (err) {
             res.status(500).json({ error: err.message });
@@ -24,6 +20,7 @@ const getALLProduct = (req, res) => {
 }
 
 const getSingleProductById = (req, res) => {
+    const db = req.app.locals.db;
     const { id } = req.params;
     db.get("SELECT id, name, price, quantity FROM products WHERE id = ?", [id], (err, row) => {
         if (err) {
@@ -39,6 +36,7 @@ const getSingleProductById = (req, res) => {
 }
 
 const addProduct = (req, res) => {
+    const db = req.app.locals.db;
     const { name, price, quantity } = req.body;
     const stmt = db.prepare("INSERT INTO products (name, price, quantity) VALUES (?, ?, ?)");
     stmt.run(name, price, quantity || 0, function (err) {
@@ -51,11 +49,10 @@ const addProduct = (req, res) => {
     stmt.finalize();
 }
 
-// Update product
-router.put('/api/products/:id', (req, res) => {
+const updateProduct = (req, res) => {
+    const db = req.app.locals.db;
     const { id } = req.params;
     const { name, price, quantity } = req.body;
-
     db.run(
         "UPDATE products SET name = ?, price = ?, quantity = ? WHERE id = ?",
         [name, price, quantity, id],
@@ -67,13 +64,12 @@ router.put('/api/products/:id', (req, res) => {
             res.json({ id, name, price, quantity });
         }
     );
-});
+}
 
-// Update product quantity
-router.put('/api/products/:id/quantity', (req, res) => {
+const updateProductQuantity = (req, res) => {
+    const db = req.app.locals.db;
     const { id } = req.params;
     const { quantity } = req.body;
-
     db.run(
         "UPDATE products SET quantity = ? WHERE id = ?",
         [quantity, id],
@@ -85,10 +81,10 @@ router.put('/api/products/:id/quantity', (req, res) => {
             res.json({ id, quantity });
         }
     );
-});
+}
 
-// Delete product by ID
-router.delete('/api/products/:id', (req, res) => {
+const deleteProduct = (req, res) => {
+    const db = req.app.locals.db;
     const { id } = req.params;
     db.run("DELETE FROM products WHERE id = ?", id, function (err) {
         if (err) {
@@ -97,4 +93,15 @@ router.delete('/api/products/:id', (req, res) => {
         }
         res.json({ message: "Product deleted successfully" });
     });
-});
+}
+
+// Now define routes
+router.get('/', testRoute);
+router.get('/api/products', getALLProduct);
+router.get('/api/products/:id', getSingleProductById);
+router.post('/api/products', addProduct);
+router.put('/api/products/:id', updateProduct);
+router.put('/api/products/:id/quantity', updateProductQuantity);
+router.delete('/api/products/:id', deleteProduct);
+
+module.exports = router;
