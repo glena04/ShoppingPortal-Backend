@@ -16,4 +16,4 @@ waiter puts the note before chef, chef process the order -> request object goes 
 chef -> handler function
 prepared hot food -> response object sent by the server
 food in a bowl, or plate, or a tray -> response in a json format, in a text format
-order written in notes -> API endpoint acociated with the request.
+order written in notes -> API endpoint acociated with the request..
