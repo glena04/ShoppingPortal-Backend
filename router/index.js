@@ -1,6 +1,7 @@
 // router/index.js
 const express = require('express');
 const router = express.Router();
+const { authenticateToken, isAdmin } = require('./auth');
 
 // Function definitions
 const testRoute = (req, res) => {
@@ -8,7 +9,7 @@ const testRoute = (req, res) => {
 }
 
 const getALLProduct = (req, res) => {
-    const db = req.app.locals.db;       // was missing in the original code
+    const db = req.app.locals.db;
     // Access db from app.locals
     db.all("SELECT id, name, price, quantity FROM products", [], (err, rows) => {
         if (err) {
@@ -38,6 +39,12 @@ const getSingleProductById = (req, res) => {
 const addProduct = (req, res) => {
     const db = req.app.locals.db;
     const { name, price, quantity } = req.body;
+    
+    // Validate input
+    if (!name || !price) {
+        return res.status(400).json({ error: "Name and price are required" });
+    }
+    
     const stmt = db.prepare("INSERT INTO products (name, price, quantity) VALUES (?, ?, ?)");
     stmt.run(name, price, quantity || 0, function (err) {
         if (err) {
@@ -53,6 +60,12 @@ const updateProduct = (req, res) => {
     const db = req.app.locals.db;
     const { id } = req.params;
     const { name, price, quantity } = req.body;
+    
+    // Validate input
+    if (!name || !price) {
+        return res.status(400).json({ error: "Name and price are required" });
+    }
+    
     db.run(
         "UPDATE products SET name = ?, price = ?, quantity = ? WHERE id = ?",
         [name, price, quantity, id],
@@ -61,6 +74,11 @@ const updateProduct = (req, res) => {
                 res.status(500).json({ error: err.message });
                 return;
             }
+            
+            if (this.changes === 0) {
+                return res.status(404).json({ error: "Product not found" });
+            }
+            
             res.json({ id, name, price, quantity });
         }
     );
@@ -70,6 +88,12 @@ const updateProductQuantity = (req, res) => {
     const db = req.app.locals.db;
     const { id } = req.params;
     const { quantity } = req.body;
+    
+    // Validate input
+    if (quantity === undefined) {
+        return res.status(400).json({ error: "Quantity is required" });
+    }
+    
     db.run(
         "UPDATE products SET quantity = ? WHERE id = ?",
         [quantity, id],
@@ -78,6 +102,11 @@ const updateProductQuantity = (req, res) => {
                 res.status(500).json({ error: err.message });
                 return;
             }
+            
+            if (this.changes === 0) {
+                return res.status(404).json({ error: "Product not found" });
+            }
+            
             res.json({ id, quantity });
         }
     );
@@ -91,17 +120,29 @@ const deleteProduct = (req, res) => {
             res.status(500).json({ error: err.message });
             return;
         }
+        
+        if (this.changes === 0) {
+            return res.status(404).json({ error: "Product not found" });
+        }
+        
         res.json({ message: "Product deleted successfully" });
     });
 }
 
 // Now define routes
 router.get('/', testRoute);
+
+// Public routes - no authentication required
 router.get('/api/products', getALLProduct);
 router.get('/api/products/:id', getSingleProductById);
-router.post('/api/products', addProduct);
-router.put('/api/products/:id', updateProduct);
-router.put('/api/products/:id/quantity', updateProductQuantity);
-router.delete('/api/products/:id', deleteProduct);
+
+// Protected routes - authentication required
+// Cashiers can update product quantities
+router.put('/api/products/:id/quantity', authenticateToken, updateProductQuantity);
+
+// Admin-only routes - authentication and admin role required
+router.post('/api/products', authenticateToken, isAdmin, addProduct);
+router.put('/api/products/:id', authenticateToken, isAdmin, updateProduct);
+router.delete('/api/products/:id', authenticateToken, isAdmin, deleteProduct);
 
 module.exports = router;
