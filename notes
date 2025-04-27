@@ -16,4 +16,46 @@ waiter puts the note before chef, chef process the order -> request object goes 
 chef -> handler function
 prepared hot food -> response object sent by the server
 food in a bowl, or plate, or a tray -> response in a json format, in a text format
-order written in notes -> API endpoint acociated with the request..
+order written in notes -> API endpoint acociated with the request.
+If a customer wants to oder a chicken kabab, -> waiter takes his order and writes it down in a note and sends it to the chef. -> chef comes and confirms that the customer is a not a vegan.
+
+i. If route has two handler functions
+sequence of execution of the handler functions
+first handler function -> second handler function by using next()
+
+ii. To every handler fuction, three parameters are passed
+1 req -> request object : It contains the data sent by the client(frontend) to the server.
+2 res -> response object : It contains the data sent by the server to the client(frontend).
+3 next -> function to call the next handler function in the sequence.
+
+callback function -> function that is passed as an argument to another function.
+
+if steve makes a promise to return back the borrowed money and he is not able to keep it, then he is a liar.
+Promise
+if steve is tryinng -> the promise is pending.
+steve kept the promise -> the promise is resolved.
+steve is not able to keep the promise -> the promise is rejected.
+if steve fullfils the promise, the outcome is he is truthful person -> the promise is resolved, data passed to resolved callback function is returned.
+if steve is not able to keep the promise, the outcome is he is a liar -> the promise is rejected, data passed to reject callback function is returned.
+if steve is able to keep the promise or not would be decided by a third person -> the promise is resolved or rejected is decided by the if condition.
+if steve is making a new promise -> we are creating a promise by using new Promise constructor.
+
+new Promise((resolve, reject) => {
+    // do something
+    if (success) {
+        resolve(data);
+    } else {
+        reject(error);
+    }
+});
+
+.
+. wait for the promise to be resolved or rejected.  true or false, await to the promise
+.
+.
+
+organisation
+code go throw
+code understanding 
+env files
+how to use chatgpt
