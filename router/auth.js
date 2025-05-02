@@ -252,3 +252,38 @@ module.exports = router;
 // Export the middleware functions separately
 module.exports.authenticateToken = authenticateToken;
 module.exports.isAdmin = isAdmin;
+
+
+
+
+
+
+
+/*
+const express = require('express');
+const router = express.Router();
+const { authenticateToken, isAdmin } = require('../middleware/authMiddleware'); // Middleware
+const {
+    registerUser,
+    loginUser,
+    deleteUser,
+    getUserProfile,
+    updateUserProfile,
+    getAllUsers,
+} = require('../controllers/authController'); // Import controller functions
+
+// Routes
+router.post('/register', registerUser); // Register a new user
+router.post('/login', loginUser); // Login a user
+router.get('/profile', authenticateToken, getUserProfile); // Get current user profile
+router.put('/profile', authenticateToken, updateUserProfile); // Update user profile
+router.delete('/users/:id', authenticateToken, isAdmin, deleteUser); // Delete a user (admin only)
+router.get('/users', authenticateToken, isAdmin, getAllUsers); // Get all users (admin only)
+
+// Test route to check if auth router is working
+router.get('/test', (req, res) => {
+    res.json({ message: "Auth router is working" });
+});
+
+// Export the router
+module.exports = router; */
