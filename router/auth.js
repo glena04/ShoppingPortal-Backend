@@ -36,7 +36,12 @@ const isAdmin = (req, res, next) => {
 // Login user
 router.post('/login', async (req, res) => {
     console.log("Login endpoint hit");
+
+    // Access the database from app.locals
     const db = req.app.locals.db;
+
+  
+
     const { username, password } = req.body;
 
     // Validate input
@@ -246,5 +251,6 @@ router.get('/test', (req, res) => {
     res.json({ message: "Auth router is working" });
 });
 
-// Export the router
-module.exports = { router, authenticateToken, isAdmin };
+module.exports = router;
+module.exports.authenticateToken = authenticateToken;
+module.exports.isAdmin = isAdmin;

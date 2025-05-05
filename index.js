@@ -2,9 +2,23 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const routes = require('./router/index');
+console.log("Importing routers with absolute paths to avoid path resolution issues");
+// Use absolute path to avoid path resolution issues
+const routes = require('./router/index.js'); // Add explicit .js extension
 const migration = require('./database');
-const authRouter = require('./router/auth');
+
+// Perform database migration and set the database connection
+(async () => {
+    const db = await migration(); // Await the migration function to resolve the database connection
+    if (db.error) {
+        console.error('Database migration failed:', db.error);
+        process.exit(1); // Exit the application if migration fails
+    }
+
+    app.locals.db = db; // Set the resolved database connection in app.locals
+    console.log('Database connection set in app.locals');
+})();
+const authRouter = require('./router/auth.js'); // Add explicit .js extension
 
 // some operations here
 
@@ -36,11 +50,17 @@ try {
   console.error('Error importing auth router:', error.message);
 }
 
+// Ensure we're using the correct router implementation
+console.log('Routes type:', typeof routes);
+console.log('Routes is Express router:', routes.constructor && routes.constructor.name);
+
 // Use routes with extensive logging
 app.use('/', routes);
 console.log('Main routes mounted at /');
 
 if (authRouter) {
+  console.log('Auth router type:', typeof authRouter);
+  console.log('Auth router is Express router:', authRouter.constructor && authRouter.constructor.name);
   app.use('/api/auth', authRouter);
   console.log('Auth routes mounted at /api/auth');
 
