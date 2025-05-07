@@ -1,7 +1,14 @@
 // router/index.js
 const express = require('express');
-const router = express.Router();
+// Import our dedicated Express Router wrapper to avoid package conflicts
+const Router = require('../express-router');
+// Create router using our dedicated Express Router wrapper
+const router = Router();
+console.log("Creating Express router for product routes using dedicated wrapper");
 const { authenticateToken, isAdmin } = require('./auth');
+
+
+
 
 // Function definitions
 const testRoute = (req, res) => {
