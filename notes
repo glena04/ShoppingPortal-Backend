@@ -59,3 +59,48 @@ code go throw
 code understanding 
 env files
 how to use chatgpt
+
+
+
+-----------------------------------------------------------------------------------------------------------
+
+i. What is git and what is github?
+-> Git is a version control system that allows you to track changes in your code and collaborate with others. 
+GitHub is a platform that hosts Git repositories and provides additional features for collaboration, such as issue tracking, pull requests, and project management.
+Simpler term
+-> Git is a tool that helps you keep track of changes in your code, while GitHub is a website where you can store and share your code with others.
+
+ii. what is git clone?
+-> Git clone is a command used to create a copy of a remote Git repository on your local machine. It downloads all the files, branches, and 
+commit history from the remote repository(repository in GitHub) to your local machine.
+cammand: git clone <repository-url>
+
+
+iii. what is git pull?
+-> Git pull is a command used to fetch and merge changes from a remote repository into your local branch. It updates your local branch with the latest 
+changes from the remote branch.
+command: git pull <remote> <branch-name>
+git pull origin main
+
+iV how to set remote origin?
+-> To set the remote origin for a local Git repository, you can use the following command:
+git remote add origin <repository-url> 
+
+v to get the remote origin
+git remote get-url --all origin
+
+vi. what are all the different states of a file in git?
+-> In Git, a file can be in one of the following states:
+1. Untracked: The file is not being tracked by Git and is not part of the repository.
+2. Modified: The file has been changed but not yet staged for commit. 
+3. Staged: The file has been added to the staging area and is ready to be committed.
+4. Committed: The file has been committed to the local repository.
+5. Pushed: The committed changes have been pushed to the remote repository.
+
+
+Examlple:
+afham  star   git repository
+
+repository has three branches main, dev, feature
+start is working on dev branch and he has made some changes in the code and he wants to push the changes to the remote repository.
+git add .   --> to add the changes to the staging area
