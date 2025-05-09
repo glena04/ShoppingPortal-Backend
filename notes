@@ -89,6 +89,10 @@ git remote add origin <repository-url>
 v to get the remote origin
 git remote get-url --all origin
 
+git add .   --> to add the changes to the staging area
+
+git checkout main  --> to switch to the main branch
+
 vi. what are all the different states of a file in git?
 -> In Git, a file can be in one of the following states:
 1. Untracked: The file is not being tracked by Git and is not part of the repository.
@@ -97,10 +101,52 @@ vi. what are all the different states of a file in git?
 4. Committed: The file has been committed to the local repository.
 5. Pushed: The committed changes have been pushed to the remote repository.
 
+% $ git remote get-url --all origin     | This command is used to get the remote URL of the origin repository.
+% https://github.com/glena04/ShoppingPortal-Backend.git
+% $ git add -A                          | This command is used to add all the changes in the working directory to the staging area.      
+% $ git commit -m "learning git"        | This command is used to commit the changes in the staging area with a message. 
+% [afham 7f7b419] learning git          
+%  2 files changed, 51 insertions(+), 1 deletion(-)
+%  create mode 100644 test-git.js
+% $ git push origin afham                | This command is used to push the changes in the local branch to the remote repository.
+% Enumerating objects: 6, done.
+% Counting objects: 100% (6/6), done.
+% Delta compression using up to 4 threads
+% Compressing objects: 100% (4/4), done.
+% Writing objects: 100% (4/4), 1.27 KiB | 62.00 KiB/s, done.
+% Total 4 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+% remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+% To https://github.com/glena04/ShoppingPortal-Backend.git
+%    de175c7..7f7b419  afham -> afham
+
+Please note that in our case the remote repository is GitHub.
+But it can be any other remote repository like GitLab, BitBucket, etc.
+
+merge
+AB - BC
+ABC - ABC  
+ABC - BC    X
+
+merge
+Hoda -   Hero
+HeroHonda - HeroHonda
+
+Dev - main
+
+
+Remote repository
+main - AC
+feature - AC
+Dev - SC
 
 Examlple:
-afham  star   git repository
+we have two developers afham star in our team.  repository has three branches main, dev, feature
+afham is working on a feature branch and he has made some changes in the code and he has pushed the changes to the remote repository.
 
-repository has three branches main, dev, feature
-start is working on dev branch and he has made some changes in the code and he wants to push the changes to the remote repository.
-git add .   --> to add the changes to the staging area
+start is working on dev branch and he has made some changes in the code and he has pushed the changes to the remote repository.
+
+afham changes in the feature branch was approved by the manager.
+
+so afham will star that, please updated the main branch by pulling the changes.
+git checkout main
+git pull origin main
