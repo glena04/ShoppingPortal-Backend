@@ -35,6 +35,7 @@ const db = migration();
 if (db.error) {
   console.error('Database migration failed:', db.error.message);
   process.exit(1); // Exit the application if migration fails
+
 }
 
 // Make the database available to routers
