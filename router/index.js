@@ -11,6 +11,7 @@ const { authenticateToken, isAdmin } = require('./auth');
 
 
 // Function definitions
+
 const testRoute = (req, res) => {
     res.send('Server is running! 🚀');
 }
@@ -137,14 +138,15 @@ const deleteProduct = (req, res) => {
 }
 
 // Now define routes
+
 router.get('/', testRoute);
 
 // Public routes - no authentication required
 router.get('/api/products', getALLProduct);
 router.get('/api/products/:id', getSingleProductById);
 
-// Protected routes - authentication required
-// Cashiers can update product quantities
+// Protected routes - authentication required.
+// Cashiers can update product quantities.
 router.put('/api/products/:id/quantity', authenticateToken, updateProductQuantity);
 
 // Admin-only routes - authentication and admin role required
